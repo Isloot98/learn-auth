@@ -6,7 +6,7 @@ import Link from "next/link";
 import SubmitButton from "@/components/submitButton";
 import DeleteButton from "@/components/DeleteButton";
 import EditPostComp from "@/components/editPost";
-import ToggleEditComponent from "@/components/ShowEditForm";
+import ToggleEditComponent from "@/components/showEditForm";
 
 const Posts = async () => {
   const result = await sql`
