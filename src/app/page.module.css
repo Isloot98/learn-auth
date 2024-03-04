@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap");
+
+.navDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  font-family: "Kode Mono", monospace;
+  font-weight: 600;
+  font-size: larger;
+  transition: all 0.5s ease;
+}
+
+.anotherClass {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.home {
+  transition: all 0.5s ease;
+}
+
+.home:hover {
+  transform: scale(1.4);
+}
+
+.about {
+  transition: all 0.5s ease;
+}
+
+.about:hover {
+  transform: scale(1.4);
+}
+
+.heroes {
+  transition: all 0.5s ease;
+}
+
+.heroes:hover {
+  transform: scale(1.4);
+}
+
+.footer {
+  height: 8rem;
+  display: flex;
+  align-items: flex-end;
+}
+
+.isaSvg {
+  transition: all 0.5s ease;
+}
+
+.isaSvg:hover {
+  transform: scale(1.4);
+}
