@@ -29,9 +29,9 @@ export default function RootLayout({ children }) {
                 <Link href="/">Home</Link>
               </li>
 
-              <li className={styles.heroes}>
+              {/* <li className={styles.heroes}>
                 <Link href="/posts">Community</Link>
-              </li>
+              </li> */}
             </ul>
           </nav>
         </header>
