@@ -2,7 +2,7 @@ import { sql } from "@vercel/postgres";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import styles from "./createPost.module.css";
-import SubmitButton from "@/components/submitButton";
+import SubmitButton from "../../../components/submitButton";
 import { currentUser } from "@clerk/nextjs";
 
 export default function NewPostPage() {

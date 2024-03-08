@@ -3,13 +3,15 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import styles from "./posts.module.css";
 import Link from "next/link";
-import DeleteButton from "@/components/DeleteButton";
-import ToggleEditComponent from "@/components/showEditForm";
-import EditPostComp from "@/components/editPost";
-import SubmitButton from "../../components/submitButton";
-import DeleteComment from "@/components/DeleteComment";
+
 import { auth } from "@clerk/nextjs";
 import { currentUser, SignedIn } from "@clerk/nextjs";
+import DeleteButton from "../../components/DeleteButton";
+import ToggleEditComponent from "../../components/showEditForm";
+import EditPostComp from "../../components/editPost";
+import SubmitButton from "../../components/submitButton";
+import DeleteComment from "../../components/DeleteComment";
+
 const Posts = async () => {
   const user = await currentUser();
   const result = await sql`

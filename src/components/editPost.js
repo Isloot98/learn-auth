@@ -1,5 +1,5 @@
 import styles from "./delete.module.css";
-import SubmitButton from "@/components/submitButton";
+import SubmitButton from "./submitButton";
 import { sql } from "@vercel/postgres";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";

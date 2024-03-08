@@ -1,6 +1,6 @@
 "use client";
 
-import { handleDeletePost } from "@/utilities/deleteButton";
+import { handleDeletePost } from "../utilities/deleteButton";
 import styles from "./delete.module.css";
 
 export default function DeleteButton({ id }) {

@@ -1,0 +1,25 @@
+.mainNav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.links {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  margin-top: 2rem;
+}
+
+.links:hover {
+  color: #4caf50;
+}
+
+.profileLink {
+  margin-top: 2rem;
+}
+
+.profileLink:hover {
+  color: #4caf50;
+}

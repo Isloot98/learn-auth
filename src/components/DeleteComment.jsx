@@ -1,6 +1,6 @@
 "use client";
 
-import { handleDeleteComment } from "@/utilities/deleteButton";
+import { handleDeleteComment } from "../utilities/deleteButton";
 import styles from "./delete.module.css";
 
 export default function DeleteComment({ id }) {
