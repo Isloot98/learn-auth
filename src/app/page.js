@@ -1,6 +1,6 @@
-import { SignUp, SignIn } from "@clerk/nextjs";
+// import { SignUp, SignIn } from "@clerk/nextjs";
 
-function Homepage() {
+export default function Homepage() {
   return (
     <div>
       <h1>Welcome to Social media app</h1>
@@ -12,4 +12,3 @@ function Homepage() {
     </div>
   );
 }
-export default Homepage;
