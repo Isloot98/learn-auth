@@ -11,12 +11,12 @@ export default function EditPostComp({ id }) {
     "use server";
     console.log("Saving post to the database...");
 
-    const username = formData.get("username");
+    const username = formData.get("authusername");
     const title = formData.get("title");
-    const textcontent = formData.get("textcontent");
+    const textcontent = formData.get("authtextcontent");
 
-    await sql`UPDATE posts 
-    SET username = ${username}, title = ${title}, textcontent = ${textcontent} WHERE id = ${postid}`;
+    await sql`UPDATE authposts 
+    SET authusername = ${username}, title = ${title}, authtextcontent = ${textcontent} WHERE id = ${postid}`;
 
     console.log("Post saved!");
     revalidatePath("/posts");
@@ -28,24 +28,24 @@ export default function EditPostComp({ id }) {
     <div className={styles.parent}>
       <div className={styles.formContainer}>
         <form action={handleEdit} className={styles.form}>
-          <label className={styles.label} htmlFor="username">
+          <label className={styles.label} htmlFor="authusername">
             Username
           </label>
           <input
             className={styles.input}
-            id="username"
-            name="username"
+            id="authusername"
+            name="authusername"
             type="text"
           />
           <label className={styles.label} htmlFor="title">
             Title
           </label>
           <input id="title" name="title" type="text" className={styles.input} />
-          <label htmlFor="textcontent">Text Content</label>
+          <label htmlFor="authtextcontent">Text Content</label>
           <input
             type="text"
-            id="textcontent"
-            name="textcontent"
+            id="authtextcontent"
+            name="authtextcontent"
             className={styles.input}
           />
           <input
