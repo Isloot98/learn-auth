@@ -1,12 +1,12 @@
-import DeleteButton from "@/components/DeleteButton";
-import DeleteComment from "@/components/DeleteComment";
-import EditPostComp from "@/components/editPost";
-import ToggleEditComponent from "@/components/showEditForm";
-import SubmitButton from "@/components/submitButton";
 import { currentUser, SignedIn } from "@clerk/nextjs";
 import { sql } from "@vercel/postgres";
 import Link from "next/link";
 import styles from "../../feed/posts.module.css";
+import DeleteButton from "../../../components/DeleteButton";
+import ToggleEditComponent from "../../../components/showEditForm";
+import EditPostComp from "../../../components/editPost";
+import SubmitButton from "../../../components/submitButton";
+import DeleteComment from "../../../components/DeleteComment";
 
 const profilePage = async () => {
   const user = await currentUser();

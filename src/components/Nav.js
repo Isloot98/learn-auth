@@ -14,7 +14,9 @@ const Nav = async ({ userId }) => {
         Feed
       </Link>
       <br />
-      <Link href={`/profile/${user}`}>Profile</Link>
+      <Link href={`/profile/${user}`} className={styles.profileLink}>
+        Profile
+      </Link>
       <UserButton />
     </nav>
   );
