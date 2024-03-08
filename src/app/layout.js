@@ -5,7 +5,7 @@ import styles from "./page.module.css";
 const inter = Inter({ subsets: ["latin"] });
 import Image from "next/image";
 import Nav from "../components/Nav";
-import { ClerkProvider, currentUser } from "@clerk/nextjs";
+import { ClerkProvider, currentUser, UserButton } from "@clerk/nextjs";
 
 export const metadata = {
   title: "Overwatch stats App",
@@ -23,8 +23,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   const fetchUserId = async () => {
     const user = await currentUser();
-    const userId = user.id;
-    return userId;
+    if (user) {
+      const userId = user.id;
+      return userId;
+    } else {
+      return null;
+    }
   };
 
   const userId = fetchUserId();

@@ -9,8 +9,7 @@ import EditPostComp from "@/components/editPost";
 import SubmitButton from "../../components/submitButton";
 import DeleteComment from "@/components/DeleteComment";
 import { auth } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs";
-
+import { currentUser, SignedIn } from "@clerk/nextjs";
 const Posts = async () => {
   const user = await currentUser();
   const result = await sql`
@@ -77,61 +76,64 @@ const Posts = async () => {
 
   return (
     <div className={styles.parent}>
-      <Link
-        className={`${styles.createPost} ${styles.button}`}
-        href="/feed/new-post"
-      >
-        Create Post
-      </Link>
-      {sortedPostsData.map((post) => (
-        <div key={post.id} className={styles.posts}>
-          <div className={styles.post}>
-            <img className={styles.profilePic} src={post.imgurl} />
-            <p>{post.username}</p>
-            <h2>{post.title}</h2>
-            <p>{post.textcontent}</p>
-            <DeleteButton id={post.id} />
-            <ToggleEditComponent>
-              <EditPostComp id={post.id} />
-            </ToggleEditComponent>
-          </div>
-          <div className={styles.commentSection}>
-            <h1>Comments</h1>
-            <div className={styles.formContainer}>
-              <form action={handleSaveComment} className={styles.form}>
-                <label htmlFor="textcontent">Text Content</label>
-                <textarea
-                  id="textcontent"
-                  name="textcontent"
-                  className={styles.input}
-                />
-                <input
-                  className={styles.invisiblePostId}
-                  name="postid"
-                  type="text"
-                  value={post.id}
-                />
-                <SubmitButton className={styles.button} />
-              </form>
+      <h1>Please sign in or create an account</h1>
+      <SignedIn>
+        <Link
+          className={`${styles.createPost} ${styles.button}`}
+          href="/feed/new-post"
+        >
+          Create Post
+        </Link>
+        {sortedPostsData.map((post) => (
+          <div key={post.id} className={styles.posts}>
+            <div className={styles.post}>
+              <img className={styles.profilePic} src={post.imgurl} />
+              <p>{post.username}</p>
+              <h2>{post.title}</h2>
+              <p>{post.textcontent}</p>
+              <DeleteButton id={post.id} />
+              <ToggleEditComponent>
+                <EditPostComp id={post.id} />
+              </ToggleEditComponent>
             </div>
-            <div className={styles.commentsContainer}>
-              {post.comments &&
-                post.comments.map((comment) => (
-                  <div key={comment.commentid} className={styles.comment}>
-                    <img
-                      className={styles.commentProfilePic}
-                      src={comment.imgurl}
-                    />
+            <div className={styles.commentSection}>
+              <h1>Comments</h1>
+              <div className={styles.formContainer}>
+                <form action={handleSaveComment} className={styles.form}>
+                  <label htmlFor="textcontent">Text Content</label>
+                  <textarea
+                    id="textcontent"
+                    name="textcontent"
+                    className={styles.input}
+                  />
+                  <input
+                    className={styles.invisiblePostId}
+                    name="postid"
+                    type="text"
+                    value={post.id}
+                  />
+                  <SubmitButton className={styles.button} />
+                </form>
+              </div>
+              <div className={styles.commentsContainer}>
+                {post.comments &&
+                  post.comments.map((comment) => (
+                    <div key={comment.commentid} className={styles.comment}>
+                      <img
+                        className={styles.commentProfilePic}
+                        src={comment.imgurl}
+                      />
 
-                    <p>{comment.commentusername}</p>
-                    <p>{comment.commenttextcontent}</p>
-                    <DeleteComment id={comment.commentid} />
-                  </div>
-                ))}
+                      <p>{comment.commentusername}</p>
+                      <p>{comment.commenttextcontent}</p>
+                      <DeleteComment id={comment.commentid} />
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </SignedIn>
     </div>
   );
 };

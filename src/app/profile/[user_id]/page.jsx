@@ -3,7 +3,7 @@ import DeleteComment from "@/components/DeleteComment";
 import EditPostComp from "@/components/editPost";
 import ToggleEditComponent from "@/components/showEditForm";
 import SubmitButton from "@/components/submitButton";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser, SignedIn } from "@clerk/nextjs";
 import { sql } from "@vercel/postgres";
 import Link from "next/link";
 import styles from "../../feed/posts.module.css";
@@ -11,13 +11,19 @@ import styles from "../../feed/posts.module.css";
 const profilePage = async () => {
   const user = await currentUser();
   let username;
-  if (user.username) {
+  if (user && user.username) {
     username = user.username;
-  } else {
+  } else if (user && user.firstName) {
     username = `${user.firstName} ${user.lastName}`;
+  } else {
+    username = "user";
   }
-  const userId = user.id;
-  const profileimgsrc = user.imageUrl;
+  if (user) {
+    const userId = user.id;
+    const profileimgsrc = user.imageUrl;
+  } else {
+    return null;
+  }
 
   const result = await sql`
 SELECT
@@ -84,55 +90,58 @@ WHERE authposts.user_id = ${user.id}
 
   return (
     <div className={styles.parent}>
-      {sortedPostsData.map((post) => (
-        <div key={post.id} className={styles.posts}>
-          <div className={styles.post}>
-            <img className={styles.profilePic} src={post.imgurl} />
-            <p>{post.username}</p>
-            <h2>{post.title}</h2>
-            <p>{post.textcontent}</p>
-            <DeleteButton id={post.id} />
-            <ToggleEditComponent>
-              <EditPostComp id={post.id} />
-            </ToggleEditComponent>
-          </div>
-          <div className={styles.commentSection}>
-            <h1>Comments</h1>
-            <div className={styles.formContainer}>
-              <form action={handleSaveComment} className={styles.form}>
-                <label htmlFor="textcontent">Text Content</label>
-                <textarea
-                  id="textcontent"
-                  name="textcontent"
-                  className={styles.input}
-                />
-                <input
-                  className={styles.invisiblePostId}
-                  name="postid"
-                  type="text"
-                  value={post.id}
-                />
-                <SubmitButton className={styles.button} />
-              </form>
+      <h1>Please sign in or create an account</h1>
+      <SignedIn>
+        {sortedPostsData.map((post) => (
+          <div key={post.id} className={styles.posts}>
+            <div className={styles.post}>
+              <img className={styles.profilePic} src={post.imgurl} />
+              <p>{post.username}</p>
+              <h2>{post.title}</h2>
+              <p>{post.textcontent}</p>
+              <DeleteButton id={post.id} />
+              <ToggleEditComponent>
+                <EditPostComp id={post.id} />
+              </ToggleEditComponent>
             </div>
-            <div className={styles.commentsContainer}>
-              {post.comments &&
-                post.comments.map((comment) => (
-                  <div key={comment.commentid} className={styles.comment}>
-                    <img
-                      className={styles.commentProfilePic}
-                      src={comment.imgurl}
-                    />
+            <div className={styles.commentSection}>
+              <h1>Comments</h1>
+              <div className={styles.formContainer}>
+                <form action={handleSaveComment} className={styles.form}>
+                  <label htmlFor="textcontent">Text Content</label>
+                  <textarea
+                    id="textcontent"
+                    name="textcontent"
+                    className={styles.input}
+                  />
+                  <input
+                    className={styles.invisiblePostId}
+                    name="postid"
+                    type="text"
+                    value={post.id}
+                  />
+                  <SubmitButton className={styles.button} />
+                </form>
+              </div>
+              <div className={styles.commentsContainer}>
+                {post.comments &&
+                  post.comments.map((comment) => (
+                    <div key={comment.commentid} className={styles.comment}>
+                      <img
+                        className={styles.commentProfilePic}
+                        src={comment.imgurl}
+                      />
 
-                    <p>{comment.commentusername}</p>
-                    <p>{comment.commenttextcontent}</p>
-                    <DeleteComment id={comment.commentid} />
-                  </div>
-                ))}
+                      <p>{comment.commentusername}</p>
+                      <p>{comment.commenttextcontent}</p>
+                      <DeleteComment id={comment.commentid} />
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </SignedIn>
     </div>
   );
 };
