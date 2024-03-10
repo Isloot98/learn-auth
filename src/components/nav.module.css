@@ -13,13 +13,14 @@
 }
 
 .links:hover {
-  color: #4caf50;
+  color: #38b3ec;
 }
 
 .profileLink {
   margin-top: 2rem;
+  transition: color 0.3s ease;
 }
 
 .profileLink:hover {
-  color: #4caf50;
+  color: #38b3ec;
 }

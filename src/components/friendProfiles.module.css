@@ -1,0 +1,39 @@
+.postContainer {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.postHeader {
+  margin-bottom: 10px;
+}
+
+.postContent {
+  margin-bottom: 10px;
+}
+
+.postImage {
+  max-width: 80px;
+  border-radius: 5rem;
+}
+
+.commentsContainer {
+  margin-left: 20px;
+  border-left: 1px solid #050505;
+  padding-left: 10px;
+}
+
+.commentContainer {
+  margin-bottom: 10px;
+}
+
+.commentsHeading {
+  font-size: x-large;
+  font-weight: 600;
+}
+
+.commentImage {
+  max-width: 80px;
+  border-radius: 5rem;
+}

@@ -6,6 +6,8 @@ const Nav = async ({ userId }) => {
   const user = await userId;
   return (
     <nav className={styles.mainNav}>
+      <UserButton />
+
       <Link href={"/"} className={styles.links}>
         Home
       </Link>
@@ -17,7 +19,10 @@ const Nav = async ({ userId }) => {
       <Link href={`/profile/${user}`} className={styles.profileLink}>
         Profile
       </Link>
-      <UserButton />
+
+      <Link href={`/friends`} className={styles.profileLink}>
+        Friends
+      </Link>
     </nav>
   );
 };

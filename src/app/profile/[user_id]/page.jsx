@@ -1,12 +1,13 @@
 import { currentUser, SignedIn } from "@clerk/nextjs";
 import { sql } from "@vercel/postgres";
 import Link from "next/link";
-import styles from "../../feed/posts.module.css";
+import feedStyles from "../../feed/posts.module.css";
 import DeleteButton from "../../../components/DeleteButton";
 import ToggleEditComponent from "../../../components/showEditForm";
 import EditPostComp from "../../../components/editPost";
 import SubmitButton from "../../../components/submitButton";
 import DeleteComment from "../../../components/DeleteComment";
+import profileStyles from "./profile.module.css";
 
 const profilePage = async () => {
   const user = await currentUser();
@@ -34,6 +35,15 @@ SELECT
 LEFT JOIN authcomments ON authposts.id = authcomments.postid
 WHERE authposts.user_id = ${user.id}
     `;
+
+  const profileData = await sql`SELECT
+  profiles.bio, profiles.profilepic
+  FROM
+  profiles
+  WHERE
+  user_id = ${user.id}`;
+
+  console.log(profileData);
 
   const postsWithComments = result.rows.reduce((accumulator, row) => {
     const postId = row.id;
@@ -86,16 +96,35 @@ WHERE authposts.user_id = ${user.id}
     redirect(`/profile/${userId}`);
   };
 
-  console.log(postsWithComments);
-
   return (
-    <div className={styles.parent}>
-      <h1>Please sign in or create an account</h1>
+    <div className={`${feedStyles.parent} ${profileStyles.parent}`}>
+      {user.id ? null : <h1>Please sign in or create an account</h1>}
       <SignedIn>
+        <div className={profileStyles.profileContainer}>
+          <div className={profileStyles.profileHeader}>
+            <div className={profileStyles.profilePictureContainer}>
+              {profileData.rows && profileData.rows.length > 0 && (
+                <img
+                  src={profileData.rows[0].profilepic}
+                  alt="Profile Picture"
+                />
+              )}
+            </div>
+            <div className={profileStyles.profileActions}>
+              <Link href={`/profile/${user.id}/edit-bio`}>Edit Bio</Link>
+            </div>
+          </div>
+          <div className={profileStyles.bio}>
+            {profileData.rows && profileData.rows.length > 0 && (
+              <p>{profileData.rows[0].bio}</p>
+            )}
+          </div>
+        </div>
+
         {sortedPostsData.map((post) => (
-          <div key={post.id} className={styles.posts}>
-            <div className={styles.post}>
-              <img className={styles.profilePic} src={post.imgurl} />
+          <div key={post.id} className={feedStyles.posts}>
+            <div className={feedStyles.post}>
+              <img className={feedStyles.profilePic} src={post.imgurl} />
               <p>{post.username}</p>
               <h2>{post.title}</h2>
               <p>{post.textcontent}</p>
@@ -104,31 +133,31 @@ WHERE authposts.user_id = ${user.id}
                 <EditPostComp id={post.id} />
               </ToggleEditComponent>
             </div>
-            <div className={styles.commentSection}>
+            <div className={feedStyles.commentSection}>
               <h1>Comments</h1>
-              <div className={styles.formContainer}>
-                <form action={handleSaveComment} className={styles.form}>
+              <div className={feedStyles.formContainer}>
+                <form action={handleSaveComment} className={feedStyles.form}>
                   <label htmlFor="textcontent">Text Content</label>
                   <textarea
                     id="textcontent"
                     name="textcontent"
-                    className={styles.input}
+                    className={feedStyles.input}
                   />
                   <input
-                    className={styles.invisiblePostId}
+                    className={feedStyles.invisiblePostId}
                     name="postid"
                     type="text"
                     value={post.id}
                   />
-                  <SubmitButton className={styles.button} />
+                  <SubmitButton className={feedStyles.button} />
                 </form>
               </div>
-              <div className={styles.commentsContainer}>
+              <div className={feedStyles.commentsContainer}>
                 {post.comments &&
                   post.comments.map((comment) => (
-                    <div key={comment.commentid} className={styles.comment}>
+                    <div key={comment.commentid} className={feedStyles.comment}>
                       <img
-                        className={styles.commentProfilePic}
+                        className={feedStyles.commentProfilePic}
                         src={comment.imgurl}
                       />
 

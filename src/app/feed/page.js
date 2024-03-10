@@ -78,7 +78,7 @@ const Posts = async () => {
 
   return (
     <div className={styles.parent}>
-      <h1>Please sign in or create an account</h1>
+      {user.id ? null : <h1>Please sign in or create an account</h1>}
       <SignedIn>
         <Link
           className={`${styles.createPost} ${styles.button}`}
